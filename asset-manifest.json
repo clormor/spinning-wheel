@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/spinning-wheel/static/css/main.91550417.chunk.css",
+    "main.css": "/spinning-wheel/static/css/main.985b54dd.chunk.css",
     "main.js": "/spinning-wheel/static/js/main.f8028c90.chunk.js",
     "main.js.map": "/spinning-wheel/static/js/main.f8028c90.chunk.js.map",
     "runtime-main.js": "/spinning-wheel/static/js/runtime-main.19040d65.js",
@@ -8,16 +8,16 @@
     "static/js/2.67068186.chunk.js": "/spinning-wheel/static/js/2.67068186.chunk.js",
     "static/js/2.67068186.chunk.js.map": "/spinning-wheel/static/js/2.67068186.chunk.js.map",
     "index.html": "/spinning-wheel/index.html",
-    "precache-manifest.20e31dba7c5f0d053adfa59e5da2fd64.js": "/spinning-wheel/precache-manifest.20e31dba7c5f0d053adfa59e5da2fd64.js",
+    "precache-manifest.e4f5c6b62d53af384a8e12a8a2b67573.js": "/spinning-wheel/precache-manifest.e4f5c6b62d53af384a8e12a8a2b67573.js",
     "service-worker.js": "/spinning-wheel/service-worker.js",
-    "static/css/main.91550417.chunk.css.map": "/spinning-wheel/static/css/main.91550417.chunk.css.map",
+    "static/css/main.985b54dd.chunk.css.map": "/spinning-wheel/static/css/main.985b54dd.chunk.css.map",
     "static/js/2.67068186.chunk.js.LICENSE.txt": "/spinning-wheel/static/js/2.67068186.chunk.js.LICENSE.txt",
     "static/media/SpinningWheel.css": "/spinning-wheel/static/media/arrow-left.1f3cc587.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.19040d65.js",
     "static/js/2.67068186.chunk.js",
-    "static/css/main.91550417.chunk.css",
+    "static/css/main.985b54dd.chunk.css",
     "static/js/main.f8028c90.chunk.js"
   ]
 }
