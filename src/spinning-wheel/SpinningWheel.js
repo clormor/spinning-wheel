@@ -105,7 +105,7 @@ export default function SpinningWheel() {
                         <b>Film & TV</b>
                     </div>
                     <div className="segment-3 segment">
-                        <b>Pub Quiz</b>
+                        <b>Spin Again!</b>
                     </div>
                     <div className="segment-4 segment">
                         <b>Music</b>
