@@ -14,6 +14,13 @@
 **Rule**: When the user directly states their current git or repo state, take it at face value and proceed. Only investigate state when it is genuinely unknown or contradicts observable evidence.
 **Applies to**: global
 
+### [2026-05-19] Clarify "preview" ambiguity before diagnosing in projects with both Vite and Vercel
+
+**Context**: User said "vite previews don't seem to load this app properly". Claude started diagnosing a local `vite preview` base-path issue (suggesting `--base /` or visiting `/spinning-wheel/`).
+**Correction**: User corrected to "vercel previews" — the problem was Vercel deployments, not the local Vite preview server. The fix was a `vercel.json` env var, not a CLI flag.
+**Rule**: When a user mentions "preview" in a project with both Vite and Vercel, confirm which they mean before proposing a solution. The word is ambiguous: Vite has `npm run preview`, Vercel has preview deployments.
+**Applies to**: global
+
 ### [2026-05-19] Prefer ecosystem migration over incremental audit patching for unmaintained toolchains
 
 **Context**: User asked how to fix npm audit vulnerabilities without breaking things. Claude began explaining which individual packages could be safely patched.
