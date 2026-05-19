@@ -1,3 +1,7 @@
+.wheel-container {
+    position: relative;
+}
+
 .mainbox {
     position: relative;
     width: 500px;
@@ -23,113 +27,56 @@
     border-radius: 50%;
     border: 10px solid rgba(0, 0, 0, 0.479);
     overflow: hidden;
-    transition: all ease 5s;
+    transition: transform 5s ease;
+    background-color: #fff;
 }
 
-.selected {
-    opacity: 1;
-}
-
-.unselected {
-    opacity: 0.5;
+.wheel-segments,
+.wheel-labels {
+    position: absolute;
+    inset: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 
 .segment {
-    width: 50%;
-    height: 50%;
-    display: inline-block;
     position: absolute;
-    border: 1px solid black;
-}
-
-.segment-1 {
-    clip-path: polygon(0 92%, 100% 50%, 0 8%);
-    top: 120px;
-    left: 0;
-}
-.segment-2 {
-    clip-path: polygon(100% 92%, 0 50%, 100% 8%);
-    top: 120px;
-    right: 0;
-}
-.segment-3 {
-    clip-path: polygon(50% 0%, 8% 100%, 92% 100%);
-    bottom: 0;
-    left: 120px;
-}
-.segment-4 {
-    clip-path: polygon(50% 100%, 92% 0, 8% 0);
+    inset: 0;
     top: 0;
-    left: 120px;
-}
-
-.box1 .segment-1 {
-    background-color: rgb(238, 122, 122);
-}
-
-.box1 .segment-2 {
-    background-color: rgb(186, 247, 151);
-}
-
-.box1 .segment-3 {
-    background-color: rgb(151, 236, 247);
-}
-
-.box1 .segment-4 {
-    background-color: rgb(177, 122, 76);
-}
-
-.box2 .segment-1 {
-    background-color: rgb(243, 138, 226);
-}
-
-.box2 .segment-2 {
-    background-color: rgb(165, 120, 224);
-}
-
-.box2 .segment-3 {
-    background-color: rgb(245, 247, 151);
-}
-
-.box2 .segment-4 {
-    background-color: rgb(113, 91, 236);
-}
-
-.box1 .segment-3 b {
-    transform: translate(-50%, -50%) rotate(-270deg);
-}
-
-.box1 .segment-1 b,
-.box2 .segment-1 b {
-    transform: translate(-50%, -50%) rotate(185deg);
-}
-
-.box2 .segment-3 b {
-    transform: translate(-50%, -50%) rotate(90deg);
-}
-
-.box1 .segment-4 b,
-.box2 .segment-4 b {
-    transform: translate(-50%, -50%) rotate(-85deg);
-}
-
-.box2 {
+    left: 0;
     width: 100%;
     height: 100%;
-    transform: rotate(-135deg);
+    transition: opacity 0.3s ease;
 }
 
-.segment b {
-    padding: 1em;
-    text-align: center;
-    font-size: medium;
+.segment.selected {
+    opacity: 1;
+}
+
+.segment.unselected {
+    opacity: 0.4;
+}
+
+.segment-label {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    pointer-events: none;
+    color: #000;
 }
 
-.selected.segment b {
+.segment-label b {
+    display: block;
+    text-align: center;
+    font-size: medium;
+    padding: 0 0.4em;
+    max-width: 120px;
+    word-break: break-word;
+}
+
+.segment-label.selected b {
     font-size: larger;
 }
 
@@ -148,6 +95,7 @@
     font-weight: bold;
     font-size: 22px;
     cursor: pointer;
+    z-index: 2;
 }
 
 .spin:active {
@@ -164,4 +112,106 @@
     50% {
         right: -40px;
     }
+}
+
+.settings {
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 8px;
+    padding: 8px 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+    font-size: 14px;
+    max-height: 95vh;
+    overflow-y: auto;
+    z-index: 10;
+    color: #222;
+}
+
+.settings-toggle {
+    background: none;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 4px 0;
+    width: 100%;
+    text-align: left;
+    color: inherit;
+}
+
+.settings-arrow {
+    display: inline-block;
+    width: 1em;
+}
+
+.settings-body {
+    padding-top: 8px;
+    min-width: 280px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    margin-top: 4px;
+}
+
+.settings-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    gap: 8px;
+}
+
+.settings-row input[type="number"] {
+    width: 60px;
+    padding: 4px;
+    font: inherit;
+}
+
+.settings-segments {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 10px;
+}
+
+.settings-segment {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.settings-segment-index {
+    width: 24px;
+    text-align: right;
+    color: #555;
+}
+
+.settings-segment-label {
+    flex: 1;
+    padding: 4px;
+    min-width: 0;
+    font: inherit;
+}
+
+.settings-segment-color {
+    width: 36px;
+    height: 28px;
+    padding: 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    background: none;
+}
+
+.settings-reset {
+    width: 100%;
+    padding: 6px;
+    cursor: pointer;
+    font: inherit;
+}
+
+.settings input:disabled,
+.settings button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }
