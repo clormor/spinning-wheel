@@ -35,6 +35,9 @@ jobs:
         uses: anthropics/claude-code-action@v1
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          bot_id: "3955231"
+          bot_name: "clormor"
+          ssh_signing_key: ${{ secrets.CLAUDE_SSH_SIGNING_KEY }}
 
           # This is an optional setting that allows Claude to read CI results on PRs
           additional_permissions: |
