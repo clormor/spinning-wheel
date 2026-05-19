@@ -6,6 +6,12 @@ The result can be seen [here][github-pages].
 
 [github-pages]: https://clormor.github.io/spinning-wheel/
 
+## Development
+
+Run the dev server at `localhost:5173`:
+
+    npm install && npm start
+
 ## Deploying
 
 After commiting changes to the master branch, run:
