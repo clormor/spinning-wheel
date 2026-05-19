@@ -5,17 +5,17 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 ```bash
-npm start        # dev server at localhost:3000
-npm run build    # production build to build/
-npm test         # run tests in watch mode
+npm start        # dev server at localhost:5173
+npm run build    # production build to dist/
+npm run preview  # preview production build locally
 npm run deploy   # build then push to gh-pages branch (requires committed changes on master first)
 ```
 
-There is no linter configured beyond the default `react-app` ESLint preset bundled with `react-scripts`.
+There is no linter configured for this project.
 
 ## Architecture
 
-Single-component React app (Create React App, `react-scripts` 3.4.4) deployed to GitHub Pages at `https://clormor.github.io/spinning-wheel`.
+Single-component React 18 app (Vite) deployed to GitHub Pages at `https://clormor.github.io/spinning-wheel`.
 
 ### Wheel layout
 
@@ -35,4 +35,9 @@ After a further 10 s (`spinTimeMs * 3 - spinTimeMs`) the highlight is cleared. T
 
 ### Adding or changing segments
 
-Segments are hardcoded JSX in `SpinningWheel.js`. To add a segment you must also add corresponding CSS for the new clip-path shape, colour, and label rotation, and update `findSegment` if the geometry assumptions change (the `> xOrigin + 200` threshold and median-index logic assume an odd total count of visible segments at any rotation).
+Segments are hardcoded JSX in `SpinningWheel.jsx`. To add a segment you must also add corresponding CSS for the new clip-path shape, colour, and label rotation, and update `findSegment` if the geometry assumptions change (the `> xOrigin + 200` threshold and median-index logic assume an odd total count of visible segments at any rotation).
+
+## Gotchas
+
+- **`npm audit fix --force` corrupts the lockfile.** It strips the dependency tree — symptoms are `npm install` reporting "up to date" with far fewer packages than expected and binaries missing from `node_modules`. Fix: `git restore package-lock.json`. Always run plain `npm audit fix` first; never use `--force`.
+- **JSX files must use `.jsx` extension.** Vite 8 uses rolldown, which requires JSX syntax to be in `.jsx` files. Plain `.js` files containing JSX will fail to build.
