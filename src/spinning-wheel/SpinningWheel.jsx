@@ -16,6 +16,10 @@ const MIN_SEGMENTS = 2;
 const MAX_SEGMENTS = 16;
 const SPIN_DURATION_MS = 5000;
 const LABEL_RADIUS_PX = 150;
+const MIN_ROTATIONS_BOUND = 1;
+const MAX_ROTATIONS_BOUND = 50;
+const DEFAULT_MIN_ROTATIONS = 6;
+const DEFAULT_MAX_ROTATIONS = 28;
 
 function hslToHex(h, s, l) {
     const sn = s / 100;
@@ -76,6 +80,8 @@ export default function SpinningWheel() {
     const [spinning, setSpinning] = useState(false);
     const [animateArrow, setAnimateArrow] = useState(false);
     const [settingsOpen, setSettingsOpen] = useState(false);
+    const [minRotations, setMinRotations] = useState(DEFAULT_MIN_ROTATIONS);
+    const [maxRotations, setMaxRotations] = useState(DEFAULT_MAX_ROTATIONS);
     const timeoutsRef = useRef([]);
 
     const N = segments.length;
@@ -87,9 +93,10 @@ export default function SpinningWheel() {
     }
 
     function performSpin() {
-        const min = 1024;
-        const max = 9999;
-        const extra = Math.floor(Math.random() * (max - min)) + min;
+        const lo = Math.min(minRotations, maxRotations);
+        const hi = Math.max(minRotations, maxRotations);
+        // extra is always positive => CSS interpolates clockwise every spin
+        const extra = (lo + Math.random() * (hi - lo)) * 360;
         const newRotation = rotation + extra;
         const spinStep = step;
 
@@ -141,9 +148,33 @@ export default function SpinningWheel() {
         );
     }
 
+    function clampRotations(rawValue) {
+        if (!Number.isFinite(rawValue)) return null;
+        return Math.max(
+            MIN_ROTATIONS_BOUND,
+            Math.min(MAX_ROTATIONS_BOUND, Math.floor(rawValue))
+        );
+    }
+
+    function updateMinRotations(rawValue) {
+        const next = clampRotations(rawValue);
+        if (next === null) return;
+        setMinRotations(next);
+        if (next > maxRotations) setMaxRotations(next);
+    }
+
+    function updateMaxRotations(rawValue) {
+        const next = clampRotations(rawValue);
+        if (next === null) return;
+        setMaxRotations(next);
+        if (next < minRotations) setMinRotations(next);
+    }
+
     function resetToDefaults() {
         setWinnerIndex(null);
         setSegments(DEFAULT_SEGMENTS.map((s) => ({ ...s })));
+        setMinRotations(DEFAULT_MIN_ROTATIONS);
+        setMaxRotations(DEFAULT_MAX_ROTATIONS);
     }
 
     return (
@@ -213,6 +244,10 @@ export default function SpinningWheel() {
                 onSegmentChange={updateSegment}
                 onReset={resetToDefaults}
                 disabled={spinning}
+                minRotations={minRotations}
+                maxRotations={maxRotations}
+                onMinRotationsChange={updateMinRotations}
+                onMaxRotationsChange={updateMaxRotations}
             />
         </div>
     );
@@ -226,6 +261,10 @@ function SettingsPanel({
     onSegmentChange,
     onReset,
     disabled,
+    minRotations,
+    maxRotations,
+    onMinRotationsChange,
+    onMaxRotationsChange,
 }) {
     return (
         <div className={`settings${open ? " open" : ""}`}>
@@ -251,6 +290,34 @@ function SettingsPanel({
                             onChange={(e) => {
                                 const v = parseInt(e.target.value, 10);
                                 if (!Number.isNaN(v)) onCountChange(v);
+                            }}
+                        />
+                    </label>
+                    <label className="settings-row">
+                        <span>Min spin speed (rotations)</span>
+                        <input
+                            type="number"
+                            min={MIN_ROTATIONS_BOUND}
+                            max={MAX_ROTATIONS_BOUND}
+                            value={minRotations}
+                            disabled={disabled}
+                            onChange={(e) => {
+                                const v = parseInt(e.target.value, 10);
+                                if (!Number.isNaN(v)) onMinRotationsChange(v);
+                            }}
+                        />
+                    </label>
+                    <label className="settings-row">
+                        <span>Max spin speed (rotations)</span>
+                        <input
+                            type="number"
+                            min={MIN_ROTATIONS_BOUND}
+                            max={MAX_ROTATIONS_BOUND}
+                            value={maxRotations}
+                            disabled={disabled}
+                            onChange={(e) => {
+                                const v = parseInt(e.target.value, 10);
+                                if (!Number.isNaN(v)) onMaxRotationsChange(v);
                             }}
                         />
                     </label>
